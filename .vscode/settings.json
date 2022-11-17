@@ -1,0 +1,9 @@
+{
+    "editor.tokenColorCustomizations": {
+        
+    }
+    ,
+    "files.associations": {
+        "linearalg.h": "c",
+    }
+}

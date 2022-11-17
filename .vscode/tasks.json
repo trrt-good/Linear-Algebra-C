@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "gcc build linear alg testing",
+            "command": "C:\\msys64\\mingw64\\bin\\gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "*.c",
+                "-o",
+                "testing.exe"
+                //".bin\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+				"isDefault": true
+            },
+            "detail": "compiler: C:\\msys64\\mingw64\\bin\\gcc.exe"
+        },
+        // {
+        //     "type": "cppbuild",
+        //     "label": "gcc built into bin",
+        //     "command": "C:\\msys64\\mingw64\\bin\\gcc.exe",
+        //     "args": [
+        //         "-fdiagnostics-color=always",
+        //         "-g",
+        //         "${file}",
+        //         //".lib\\*.c",
+        //         "..\\.lib\\*.c",
+        //         "-o",
+        //         "..\\.bin\\${fileBasenameNoExtension}.exe"
+        //         //".bin\\${fileBasenameNoExtension}.exe"
+        //     ],
+        //     "options": {
+        //         "cwd": "${fileDirname}"
+        //     },
+        //     "problemMatcher": [
+        //         "$gcc"
+        //     ],
+        //     "group": {
+        //         "kind": "build",
+		// 		"isDefault": true
+        //     },
+        //     "detail": "compiler: C:\\msys64\\mingw64\\bin\\gcc.exe"
+        // },
+    ]
+}
