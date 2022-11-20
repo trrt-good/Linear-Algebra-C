@@ -99,7 +99,7 @@ Matrix *la_cloneMatrix(Matrix *matrix)
     newMatrix->rows = matrix->rows;
     newMatrix->columns = matrix->columns;
 
-    newMatrix->entries = laa_cloneMatrix(matrix->rows, matrix->columns, matrix->entries);
+    newMatrix->entries = laa_cloneMatrix(matrix->entries, matrix->rows, matrix->columns);
     return newMatrix;
 }
 
@@ -290,6 +290,19 @@ void laa_printVector(float *vector, int columns)
         printf("%.13f, ", vector[i]);
     }
     printf("%.13f ]\n", vector[columns - 1]);
+}
+
+void laa_writeVectorBin(float *vector, int rows, FILE* filePointer)
+{
+    fwrite(&rows, sizeof(int), 1, filePointer);
+    fwrite(vector, sizeof(float), rows, filePointer);
+}
+
+void laa_readVectorBin(float* destVector, FILE* filePointer)
+{
+    int rows;
+    fread(&rows, sizeof(int), 1, filePointer);
+    fread(destVector, sizeof(float), rows, filePointer);
 }
 
 /**
@@ -516,6 +529,28 @@ void laa_printMatrix(float **matrix, int rows, int columns)
     printf("\n\n");
 }
 
+void laa_writeMatrixBin(float** matrix, int rows, int columns, FILE* filePointer)
+{
+    int i = 0;
+    fwrite(&rows, sizeof(int), 1, filePointer);
+    fwrite(&columns, sizeof(int), 1, filePointer);
+    for (i = 0; i < rows; i ++)
+    {
+        fwrite(matrix[i], sizeof(float), columns, filePointer);
+    }
+}
+
+void laa_readMatrixBin(float** destMatrix, FILE* filePointer)
+{
+    int i = 0, rows, columns;
+    fread(&rows, sizeof(int), 1, filePointer);
+    fread(&columns, sizeof(int), 1, filePointer);
+    for (i = 0; i < rows; i ++)
+    {
+        fread(destMatrix[i], sizeof(float), columns, filePointer);
+    }
+}
+
 /**
  * @brief allocates an array of arrays which has
  * dimensions rows x columns. The length of the pointer
@@ -630,7 +665,32 @@ float **laa_allocRandMatrix(int rows, int columns)
  * @param values values of the matrix to be cloned
  * @return float** the cloned matrix
  */
-float **laa_cloneMatrix(int rows, int columns, float **values)
+float **laa_cloneMatrix(float **values, int rows, int columns)
+{
+    int i, j;
+    float **matrixEntries = (float **)malloc(rows * sizeof(float *));
+    if (!matrixEntries)
+        exit(1);
+
+    for (i = 0; i < rows; i++)
+    {
+        matrixEntries[i] = (float *)malloc(columns * sizeof(float));
+        if (!matrixEntries[i])
+        {
+            for (; i > 0; i--)
+                free(matrixEntries[i - 1]);
+            free(matrixEntries);
+            exit(1);
+        }
+        for (j = 0; j < columns; j++)
+        {
+            matrixEntries[i][j] = values[i][j];
+        }
+    }
+    return matrixEntries;
+}
+
+float** cloneMatrix2dArray(int rows, int columns, float values[rows][columns])
 {
     int i, j;
 

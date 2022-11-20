@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <math.h>
 #include <windows.h>
 #include "..\\LinearAlg\\linearAlg.h"
 //inv(X'*X)*X'*Y
