@@ -380,12 +380,21 @@ void laa_freeVector(float *vector)
     return;
 }
 
-void laa_setVector(float *vector, int rows, float value)
+void laa_setVectorTo(float *vector, int rows, float value)
 {
     int i;
     for (i = 0; i < rows; i++)
     {
-        vector[rows] = value;
+        vector[i] = value;
+    }
+}
+
+void laa_setVectorToRand(float *vector, int rows)
+{
+    int i;
+    for (i = 0; i < rows; i++)
+    {
+        vector[i] = ((float)rand())/((float)RAND_MAX);
     }
 }
 
@@ -733,7 +742,7 @@ void laa_freeMatrix(float **matrix, int rows)
     return;
 }
 
-void laa_setMatrix(float **matrix, int rows, int columns, float value)
+void laa_setMatrixTo(float **matrix, int rows, int columns, float value)
 {
     int i, j;
     for (i = 0; i < rows; i++)
@@ -741,6 +750,18 @@ void laa_setMatrix(float **matrix, int rows, int columns, float value)
         for (j = 0; j < columns; j++)
         {
             matrix[i][j] = value;
+        }
+    }
+}
+
+void laa_setMatrixToRand(float **matrix, int rows, int columns)
+{
+    int i, j;
+    for (i = 0; i < rows; i++)
+    {
+        for (j = 0; j < columns; j++)
+        {
+            matrix[i][j] = ((float)rand() / (float)(RAND_MAX));
         }
     }
 }

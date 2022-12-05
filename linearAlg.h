@@ -78,7 +78,8 @@ float *laa_allocVectorRaw(int rows);
 float *laa_allocRandVector(int rows);
 float *laa_cloneVector(float *cloneVector, int rows);
 void laa_freeVector(float *vector);
-void laa_setVector(float *vector, int rows, float value);
+void laa_setVectorTo(float *vector, int rows, float value);
+void laa_setVectorToRand(float *vector, int rows);
 void laa_copyVectorValues(float *copyFrom, float *pasteTo, int rows);
 
 // vector math:
@@ -100,7 +101,8 @@ float **laa_allocRandMatrix(int rows, int columns);
 float **laa_cloneMatrix(float **values, int rows, int columns);
 float** cloneMatrix2dArray(int rows, int columns, float values[rows][columns]);
 void laa_freeMatrix(float **matrix, int rows);
-void laa_setMatrix(float **matrix, int rows, int columns, float value);
+void laa_setMatrixTo(float **matrix, int rows, int columns, float value);
+void laa_setMatrixToRand(float **matrix, int rows, int columns);
 void laa_copyMatrixValues(float **copyFrom, float **pasteTo, int rows, int columns);
 
 // matrix math:
