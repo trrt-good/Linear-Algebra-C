@@ -292,13 +292,13 @@ void laa_printVector(float *vector, int columns)
     printf("%.13f ]\n", vector[columns - 1]);
 }
 
-void laa_writeVectorBin(float *vector, int rows, FILE* filePointer)
+void laa_writeVectorBin(float *vector, int rows, FILE *filePointer)
 {
     fwrite(&rows, sizeof(int), 1, filePointer);
     fwrite(vector, sizeof(float), rows, filePointer);
 }
 
-void laa_readVectorBin(float* destVector, FILE* filePointer)
+void laa_readVectorBin(float *destVector, FILE *filePointer)
 {
     int rows;
     fread(&rows, sizeof(int), 1, filePointer);
@@ -394,7 +394,7 @@ void laa_setVectorToRand(float *vector, int rows)
     int i;
     for (i = 0; i < rows; i++)
     {
-        vector[i] = ((float)rand())/((float)RAND_MAX);
+        vector[i] = ((float)rand()) / ((float)RAND_MAX);
     }
 }
 
@@ -485,7 +485,7 @@ void laa_multiplyMVTo(float **matrix, int rows, int columns, float *vector, floa
         printf("destination of the matrix-vector multiplication cannot be the vector itself\n");
         exit(1);
     }
-        
+
     int i;
     for (i = 0; i < rows; i++)
     {
@@ -538,23 +538,23 @@ void laa_printMatrix(float **matrix, int rows, int columns)
     printf("\n\n");
 }
 
-void laa_writeMatrixBin(float** matrix, int rows, int columns, FILE* filePointer)
+void laa_writeMatrixBin(float **matrix, int rows, int columns, FILE *filePointer)
 {
     int i = 0;
     fwrite(&rows, sizeof(int), 1, filePointer);
     fwrite(&columns, sizeof(int), 1, filePointer);
-    for (i = 0; i < rows; i ++)
+    for (i = 0; i < rows; i++)
     {
         fwrite(matrix[i], sizeof(float), columns, filePointer);
     }
 }
 
-void laa_readMatrixBin(float** destMatrix, FILE* filePointer)
+void laa_readMatrixBin(float **destMatrix, FILE *filePointer)
 {
     int i = 0, rows, columns;
     fread(&rows, sizeof(int), 1, filePointer);
     fread(&columns, sizeof(int), 1, filePointer);
-    for (i = 0; i < rows; i ++)
+    for (i = 0; i < rows; i++)
     {
         fread(destMatrix[i], sizeof(float), columns, filePointer);
     }
@@ -699,7 +699,7 @@ float **laa_cloneMatrix(float **values, int rows, int columns)
     return matrixEntries;
 }
 
-float** cloneMatrix2dArray(int rows, int columns, float values[rows][columns])
+float **cloneMatrix2dArray(int rows, int columns, float values[rows][columns])
 {
     int i, j;
 
