@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "linearAlg.h"
 
 //=============== vectors ===============
@@ -67,7 +65,7 @@ Vector *la_multiplyMV(Matrix *a, Vector *b)
 
 void la_addVectorsTo(Vector *a, Vector *b, Vector *destination)
 {
-    laa_addVectorsTo(a->entries, b->entries, destination->entries, a->rows);
+    laa_addVectorTo(a->entries, b->entries, destination->entries, a->rows);
 }
 
 Vector *la_addVectors(Vector *a, Vector *b)
@@ -294,8 +292,14 @@ void laa_printVector(float *vector, int columns)
 
 void laa_writeVectorBin(float *vector, int rows, FILE *filePointer)
 {
-    fwrite(&rows, sizeof(int), 1, filePointer);
-    fwrite(vector, sizeof(float), rows, filePointer);
+    int elements_written;
+    elements_written = fwrite(&rows, sizeof(int), 1, filePointer);
+    elements_written += fwrite(vector, sizeof(float), rows, filePointer);
+    if (elements_written != rows + 1)
+    {
+        printf("error while writing vector");
+        exit(1);
+    }
 }
 
 void laa_readVectorBin(float *destVector, FILE *filePointer)
@@ -318,10 +322,11 @@ float *laa_allocVector(int rows, float initialValue)
     float *vector = (float *)malloc(rows * sizeof(float));
     if (!vector)
         exit(1);
-    for (i = 0; i < rows; i++)
-    {
-        vector[i] = initialValue;
-    }
+    if (initialValue == 0.0)
+        memset(vector, 0, rows*sizeof(float));
+    else
+        for (i = 0; i < rows; i++)
+            vector[i] = initialValue;
     return vector;
 }
 
@@ -407,6 +412,17 @@ void laa_copyVectorValues(float *copyFrom, float *pasteTo, int rows)
     }
 }
 
+int laa_maxIndexValue(float* vector, int rows)
+{
+    int max = 0;
+    for (int i = 0; i < rows; i ++)
+    {
+        if (vector[i] > vector[max])
+            max = i;
+    }
+    return max;
+}
+
 // vector math:
 
 /**
@@ -428,7 +444,7 @@ float laa_dot(float *a, float *b, int rows)
     return sum;
 }
 
-void laa_addVectorsTo(float *a, float *b, float *destination, int rows)
+void laa_addVectorTo(float *a, float *b, float *destination, int rows)
 {
     int i;
     for (i = 0; i < rows; i++)
@@ -502,6 +518,26 @@ float *laa_multiplyMV(float **matrix, int rows, int columns, float *vector)
         newVector[i] = laa_dot(vector, matrix[i], columns);
     }
     return newVector;
+}
+
+void laa_multiplyVSTo(float* vector, int rows, float multiplier, float* destination)
+{
+    int i;
+    for (i = 0; i < rows; i++)
+    {
+        destination[i] = vector[i]*multiplier;
+    }
+}
+
+float* laa_multiplyVS(float* vector, int rows, float multiplier)
+{
+    int i;
+    float* new_vector = malloc(sizeof(float)*rows);
+    for (i = 0; i < rows; i ++)
+    {
+        new_vector[i] = vector[i]*multiplier;
+    }
+    return new_vector;
 }
 
 //=============== matrices ===============
@@ -979,6 +1015,43 @@ float **laa_transpose(float **matrix, int rows, int columns)
         for (j = 0; j < rows; j++)
         {
             matrixEntries[i][j] = matrix[j][i];
+        }
+    }
+    return matrixEntries;
+}
+
+void laa_multiplyMSTo(float** matrixVals, int rows, int cols, float multiplier, float** destination)
+{
+    int i, j;
+    for (i = 0; i < rows; i ++)
+    {
+        for (j = 0; j < cols; j++)
+        {
+            destination[i][j] = matrixVals[i][j]*multiplier;
+        }
+    }
+}
+
+float** laa_multiplyMS(float** matrixVals, int rows, int cols, float multiplier)
+{
+    int i, j;
+    float **matrixEntries = (float **)malloc(rows * sizeof(float *));
+    if (!matrixEntries)
+        exit(1);
+
+    for (i = 0; i < rows; i++)
+    {
+        matrixEntries[i] = (float *)malloc(cols * sizeof(float));
+        if (!matrixEntries[i])
+        {
+            for (; i > 0; i--)
+                free(matrixEntries[i - 1]);
+            free(matrixEntries);
+            exit(1);
+        }
+        for (j = 0; j < cols; j++)
+        {
+            matrixEntries[i][j] = matrixVals[i][j]*multiplier;
         }
     }
     return matrixEntries;

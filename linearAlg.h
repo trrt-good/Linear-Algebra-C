@@ -81,16 +81,19 @@ void laa_freeVector(float *vector);
 void laa_setVectorTo(float *vector, int rows, float value);
 void laa_setVectorToRand(float *vector, int rows);
 void laa_copyVectorValues(float *copyFrom, float *pasteTo, int rows);
+int laa_maxIndexValue(float* vector, int rows);
 
 // vector math:
 
 float laa_dot(float *a, float *b, int rows);
-void laa_addVectorsTo(float *a, float *b, float *destination, int rows);
+void laa_addVectorTo(float *a, float *b, float *destination, int rows);
 void laa_subtractVectorsTo(float *a, float *b, float *destination, int rows);
 float *laa_addVectors(float *a, float *b, int rows);
 float *laa_subtractVectors(float *a, float *b, int rows);
 void laa_multiplyMVTo(float **matrix, int rows, int columns, float *vector, float *destination);
 float *laa_multiplyMV(float **matrix, int rows, int columns, float *vector);
+void laa_multiplyVSTo(float* vector, int rows, float multiplier, float* destination);
+float* laa_multiplyVS(float* vector, int rows, float multiplier);
 
 //=============== matrices ===============
 
@@ -117,6 +120,8 @@ float **laa_transpose(float **matrix, int rows, int columns);
 void laa_multiplyMMTo(float **a_matrixVals, int a_rows, int a_columns, float **b_matrixVals, int b_rows, int b_columns, float **destination);
 void laa_multiplyMMReplace(float **a_matrixVals, int a_rows, int a_columns, float **b_matrixVals, int b_rows, int b_columns, float **destination);
 float **laa_multiplyMM(float **a_matrixVals, int a_rows, int a_columns, float **b_matrixVals, int b_rows, int b_columns);
+void laa_multiplyMSTo(float** matrixVals, int rows, int cols, float multiplier, float** destination);
+void laa_multiplyMS(float** matrixVals, int rows, int cols, float multiplier);
 void laa_inverse(float **matrixEntries, int rows, int columns);
 float **laa_getInverse(float **matrixEntries, int rows, int columns);
 
