@@ -1,6 +1,10 @@
 #ifndef LINEAR_ALG
 #define LINEAR_ALG
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define LA_MAX_INVERSE_SIZE 10
 
 typedef struct matrix
@@ -121,7 +125,7 @@ void laa_multiplyMMTo(float **a_matrixVals, int a_rows, int a_columns, float **b
 void laa_multiplyMMReplace(float **a_matrixVals, int a_rows, int a_columns, float **b_matrixVals, int b_rows, int b_columns, float **destination);
 float **laa_multiplyMM(float **a_matrixVals, int a_rows, int a_columns, float **b_matrixVals, int b_rows, int b_columns);
 void laa_multiplyMSTo(float** matrixVals, int rows, int cols, float multiplier, float** destination);
-void laa_multiplyMS(float** matrixVals, int rows, int cols, float multiplier);
+float** laa_multiplyMS(float** matrixVals, int rows, int cols, float multiplier);
 void laa_inverse(float **matrixEntries, int rows, int columns);
 float **laa_getInverse(float **matrixEntries, int rows, int columns);
 
