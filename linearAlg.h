@@ -31,7 +31,7 @@ Vector *la_cloneVector(Vector *vector);
 Vector *la_initVector(int rows, float intialValue);
 Vector *la_initVectorArray(float *entries, int rows);
 Vector *la_initZerosVector(int rows);
-Vector *la_initRandVector(int rows);
+Vector *la_initRandVector(int rows, float from, float to);
 void la_freeVector(Vector *vector);
 
 // vector math:
@@ -53,7 +53,7 @@ Matrix *la_cloneMatrix(Matrix *matrix);
 Matrix *la_initMatrix(int rows, int columns, float initialValue);
 Matrix *la_initMatrixArray(float **entries, int rows, int columns);
 Matrix *la_initZerosMatrix(int rows, int columns);
-Matrix *la_initRandMatrix(int rows, int columns);
+Matrix *la_initRandMatrix(int rows, int columns, float from, float to);
 void la_freeMatrix(Matrix *matrix);
 
 // matrix math:
@@ -79,7 +79,7 @@ Matrix *la_getInverse(Matrix *matrix);
 void laa_printVector(float *vector, int columns);
 float *laa_allocVector(int rows, float initialValue);
 float *laa_allocVectorRaw(int rows);
-float *laa_allocRandVector(int rows);
+float *laa_allocRandVector(int rows, float from, float to);
 float *laa_cloneVector(float *cloneVector, int rows);
 void laa_freeVector(float *vector);
 void laa_setVectorTo(float *vector, int rows, float value);
@@ -104,7 +104,7 @@ float* laa_multiplyVS(float* vector, int rows, float multiplier);
 void laa_printMatrix(float **matrix, int rows, int columns);
 float **laa_allocMatrix(int rows, int columns, float initialValue);
 float **laa_allocMatrixRaw(int rows, int columns);
-float **laa_allocRandMatrix(int rows, int columns);
+float **laa_allocRandMatrix(int rows, int columns, float from, float to);
 float **laa_cloneMatrix(float **values, int rows, int columns);
 float** cloneMatrix2dArray(int rows, int columns, float values[rows][columns]);
 void laa_freeMatrix(float **matrix, int rows);
