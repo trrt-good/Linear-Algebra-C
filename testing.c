@@ -1,20 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <math.h>
-#include <windows.h>
-#include "..\\LinearAlg\\linearAlg.h"
+#include "time_benchmark.h"
+#include "linearAlg.h"
 //inv(X'*X)*X'*Y
 
 int main()
 {
-    LARGE_INTEGER tps;
-    LARGE_INTEGER t1, t2;
-    float timeDiff;
-    QueryPerformanceFrequency(&tps);
-    QueryPerformanceCounter(&t1);
-
-    srand(time(NULL));
+    start_tracking_time();
 
     Matrix* a = la_initRandMatrix(5, 10);
     Matrix* b = la_initRandMatrix(10, 5);
@@ -29,9 +22,8 @@ int main()
     la_freeVector(v);
     la_printVector(v1);
 
-    QueryPerformanceCounter(&t2);
-    timeDiff = (t2.QuadPart - t1.QuadPart) * 1000.0 / tps.QuadPart;
-    printf("\ntime: %.5f ms\n", timeDiff);
+    end_tracking_time();
+    printf("\ntime: %.5f ms\n", get_time_taken());
 
     printf("fin");
     return 0;
